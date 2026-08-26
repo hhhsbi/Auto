@@ -1,0 +1,16 @@
+# 密钥与本地配置（绝对不能上传）
+.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# 运行时产物（向量库、代码执行输出、评估输出，不入库）
+chroma_data/
+outputs/
+evaluation_results.csv
+
+# IDE
+.idea/

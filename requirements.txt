@@ -1,0 +1,9 @@
+openai
+python-dotenv
+langgraph
+chromadb
+sentence-transformers
+numpy
+pandas
+matplotlib
+duckduckgo-search
