@@ -14,3 +14,18 @@ evaluation_results.csv
 
 # IDE
 .idea/
+
+# 阶段1异步上传的临时落盘目录
+uploads/
+
+# 阶段1 文件处理元信息库
+ingest.db
+
+# 阶段5 Step 4 结构化日志文件
+logs/
+
+# 补漏：缓存 / IDE / 运行时日志 / 个人文件
+.pytest_cache/
+.trae/
+server.log
+

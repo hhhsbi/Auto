@@ -1,0 +1,31 @@
+# 代码执行沙箱产物
+outputs/
+evaluation_results.csv
+
+# Python 缓存
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# 虚拟环境与依赖目录（镜像内重新装）
+.venv/
+.trae/
+.vscode/
+.idea/
+.github/
+
+# 运行时数据（挂载卷提供，不入镜像）
+chroma_data/
+data/
+logs/
+uploads/
+ingest.db
+server.log
+
+# 密钥与个人文件
+.env
+
+# Git
+.git/
+.gitignore

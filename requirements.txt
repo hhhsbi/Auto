@@ -7,3 +7,12 @@ numpy
 pandas
 matplotlib
 duckduckgo-search
+fastapi
+uvicorn
+python-multipart
+langsmith
+pyjwt
+cachetools
+redis
+bcrypt
+slowapi

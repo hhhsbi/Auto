@@ -1,0 +1,49 @@
+# docker-compose.yml —— 一键启动 AutoResearch + Redis
+# 用法：docker compose up --build
+# 访问：http://127.0.0.1:8000
+
+services:
+  # ── Redis：两级缓存 + 限流 + 多轮对话历史 ──
+  redis:
+    image: redis:7-alpine
+    container_name: autoresearch-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # ── AutoResearch 主服务 ──
+  app:
+    build: .
+    container_name: autoresearch-app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      # DeepSeek API Key（必须配置，否则启动报错）
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
+      # Redis 连接（指向上面的 redis 服务）
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      # JWT 密钥（生产环境必须改）
+      JWT_SECRET: ${JWT_SECRET:-dev-secret-change-in-production}
+      # 联网搜索开关（国内网络建议关）
+      ENABLE_WEB_SEARCH: "false"
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      # 持久化数据：Chroma 向量库 + SQLite + 上传的文档
+      - ./docs:/app/docs
+      - ./chroma_data:/app/chroma_data
+      - ./uploads:/app/uploads
+      - ./data:/app/data
+
+volumes:
+  redis-data:
