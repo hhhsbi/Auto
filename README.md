@@ -6,8 +6,6 @@ AutoResearch 是一个多智能体深度研究系统：输入一个研究问题�
 
 项目从一个命令行脚本，分 5 个阶段演进出**生产级 RAG 服务**：
 HTTP 接口（FastAPI）→ 文件异步入库 + 切块策略 → LangSmith 监控 → RBAC 权限 → 二级缓存与失效。
-完整改造记录见 [CHANGES.md](CHANGES.md)，改造指令与知识点见 [生产级RAG改造指令集与知识点.md](生产级RAG改造指令集与知识点.md)。
-
 ## 架构
 
 ### LangGraph 流水线（核心）
@@ -272,17 +270,7 @@ curl -X DELETE http://127.0.0.1:8000/cache/clear -H "Authorization: Bearer <toke
 
 > 填上 `python eval/evaluate.py` 跑出的数字即可。基线对比模板见 [eval/results_template.md](eval/results_template.md)。
 
-## 改造记录与学习路径
 
-- **[CHANGES.md](CHANGES.md)**：5 阶段改造全记录——每阶段新建/修改了哪些文件、改了什么、为什么改、验证结果、已知坑。
-- **[生产级RAG改造指令集与知识点.md](生产级RAG改造指令集与知识点.md)**：5 阶段指令 + 配套知识点（FastAPI/异步/可观测性/JWT-RBAC/缓存失效），边做边学。
-
-5 阶段建议推进顺序：
-1. 阶段 0 FastAPI 工程化（地基，后面全靠它）
-2. 阶段 2 LangSmith 监控（最快见效，最先能看到链路图）
-3. 阶段 1 异步 + 切块（RAG 质量核心）
-4. 阶段 3 RBAC（独立，可插队）
-5. 阶段 4 缓存（依赖前面的权限/文件/模型变更点）
 
 > 首次运行会从镜像 `hf-mirror.com` 下载 embedding 模型（已在代码中设置 `HF_ENDPOINT`）。
 > 联网搜索默认关闭（国内网络下 DuckDuckGo 被墙）。若网络可用，设环境变量 `ENABLE_WEB_SEARCH=true` 即可开启「本地知识库 + 联网」双路检索。
